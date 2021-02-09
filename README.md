@@ -14,3 +14,6 @@ In this project, the BCI methods described in papers [1-3] will be reproduced an
 
 [3] [EEG Classification of Forearm Movement Imagery Using a Hierarchical Flow Convolutional Neural Network (2020)](https://ieeexplore.ieee.org/document/9046799)
 
+## Requirements
+
+This project depends on [this fork of moabb](https://github.com/m2-farzan/moabb).

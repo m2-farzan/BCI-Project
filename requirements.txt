@@ -1,1 +1,4 @@
 # manually install: github.com/m2-farzan/moabb
+keras
+tensorflow
+more-itertools

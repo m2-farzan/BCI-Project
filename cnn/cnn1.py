@@ -14,7 +14,7 @@ from sklearn.model_selection import train_test_split
 
 from more_itertools import locate
 
-class CNN(BaseEstimator):
+class CNN1(BaseEstimator):
     
     def __init__(self):
         pass

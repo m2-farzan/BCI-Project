@@ -1,1 +1,1 @@
-from cnn import CNN1
+from .cnn1 import CNN1

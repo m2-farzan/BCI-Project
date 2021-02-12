@@ -21,13 +21,14 @@ class CNN1(BaseEstimator):
 
 
     def fit(self, X, Y,batch_size=64,epochs=50):
+        print(list(Y))
         X = X.reshape(-1, 32,40, 1)
         X = X.astype('float32')
         self.Y_dic = {
-                    "feet": 0,
-                    "left_hand": 1,
-                    "right_hand": 2,
-                    "tongue": 3
+                    0: 0,
+                    1: 1,
+                    2: 2,
+                    3: 3
                 }
         
         classes = np.unique(Y)

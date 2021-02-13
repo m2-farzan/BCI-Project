@@ -14,6 +14,11 @@ import numpy as np
 import pandas as pd
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.pipeline import make_pipeline
+import tensorflow as tf
+
+# Fix random states:
+tf.random.set_seed(221)
+np.random.seed(75)
 
 
 def evaluate():

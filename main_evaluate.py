@@ -1,8 +1,20 @@
 # Our modules:
-from cnn import CNN1
-from preprocessing import FBCSP_Select 
-from preprocessing import Hilbert
-from preprocessing import Resample
+from cnn import (
+    CNN1,
+    CNN2,
+    CNN3,
+)
+
+from preprocessing import (
+    FBCSP_Select,
+    FBCSP_SelectAndCov,
+    Flatten,
+    Hilbert,
+    ICA,
+    Random,
+    Resample,
+    ZeroPad,
+)
 
 # Library modules:
 import moabb
@@ -29,12 +41,45 @@ def evaluate():
     pipelines = {
         'CSP + LDA': make_pipeline(
             CSP(n_components=8),
-            LDA()),
+            LDA()
+        ),
+        'Sakhavi pre. + LDA': make_pipeline(
+            FBCSP_Select(),
+            Hilbert(),
+            Resample(),
+            Flatten(),
+            LDA(),
+        ),
         'Sakhavi (2018)': make_pipeline(
             FBCSP_Select(),
             Hilbert(),
             Resample(),
-            CNN1()),
+            CNN1()
+        ),
+        'Kwon pre. + LDA': make_pipeline(
+            FBCSP_SelectAndCov(),
+            ZeroPad(),
+            Flatten(),
+            LDA(),
+        ),
+        'Kwon (2020)': make_pipeline(
+            FBCSP_SelectAndCov(U=20),
+            ZeroPad(),
+            CNN2(),
+        ),
+        'Jeong pre. + LDA': make_pipeline(
+            ICA(n_out=20),
+            Flatten(),
+            LDA(),
+        ),
+        'Jeong (2020)': make_pipeline(
+            ICA(n_out=20),
+            Resample(new_fs=75),
+            CNN3(),
+        ),
+        'Random': make_pipeline(
+            Random(),
+        )
     }
 
 
@@ -42,7 +87,7 @@ def evaluate():
     dataset = BNCI2014001()
     dataset.subject_list = dataset.subject_list[:N_SUBJECTS]
     datasets = [dataset]
-    overwrite = True  # set to True if we want to overwrite cached results
+    overwrite = False  # set to True if we want to overwrite cached results
 
 
     # Evaluate methods

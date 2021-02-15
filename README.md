@@ -2,7 +2,7 @@
 
 Final project of intelligent control systems course, Dept. of Mechanical Engineering, IUST (Fall 2020).
 
-State: Finished
+State: Finished — [Final Report (Farsi)](https://mfarzan.ir/bci-project/report.pdf)
 
 ## Intro
 

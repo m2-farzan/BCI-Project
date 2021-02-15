@@ -36,7 +36,7 @@ np.random.seed(75)
 def evaluate():
     # Definitions
     moabb.set_log_level('info')
-    N_SUBJECTS = 2
+    N_SUBJECTS = 9
 
     pipelines = {
         'CSP + LDA': make_pipeline(
@@ -50,7 +50,7 @@ def evaluate():
             Flatten(),
             LDA(),
         ),
-        'Sakhavi (2018)': make_pipeline(
+        'Sakhavi': make_pipeline(
             FBCSP_Select(),
             Hilbert(),
             Resample(),
@@ -62,18 +62,26 @@ def evaluate():
             Flatten(),
             LDA(),
         ),
-        'Kwon (2020)': make_pipeline(
+        'Kwon': make_pipeline(
             FBCSP_SelectAndCov(U=20),
             ZeroPad(),
             CNN2(),
         ),
         'Jeong pre. + LDA': make_pipeline(
             ICA(n_out=20),
+            Resample(new_fs=75),
             Flatten(),
             LDA(),
         ),
-        'Jeong (2020)': make_pipeline(
+        'Jeong + Hilbert': make_pipeline(
             ICA(n_out=20),
+            Hilbert(),
+            Resample(new_fs=75),
+            CNN3(),
+        ),
+        'Sakhavi Pre. + Jeong CNN': make_pipeline(
+            CSP(n_components=20, transform_into='csp_space'),
+            Hilbert(),
             Resample(new_fs=75),
             CNN3(),
         ),
@@ -98,7 +106,7 @@ def evaluate():
         evaluation = CrossSessionEvaluation(paradigm=paradigm, datasets=datasets,
                                             suffix='examples', overwrite=overwrite)
         results[name] = evaluation.process({name: pipeline})
-
+        results[name].to_pickle('partial_results (%s)' % name.replace(' +', ','))
 
     # Save
     results = pd.concat(list(results.values()))

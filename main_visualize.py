@@ -4,20 +4,21 @@ import seaborn as sns
 
 def visualize():
     # Load
-    results = pd.read_pickle('results.pandas')
+    results = pd.concat( [pd.read_pickle('results.pandas')] )
     pipelines = list(pd.unique(results.pipeline))
-    
+
     # Print
     print(results)
-    
+
     ## Bar chart
-    fig = plt.figure(figsize=[8, 4])
+    fig = plt.figure(figsize=[16, 8])
     sns.stripplot(data=results, y='score', x='pipeline', jitter=True,
                   alpha=.5, zorder=1, palette="Set1")
     sns.pointplot(data=results, y='score', x='pipeline',
                   zorder=1, palette="Set1")
     plt.ylabel('Score')
-    plt.ylim([0.5, 1])
+    plt.ylim([0.2, 0.8])
+    plt.grid()
     plt.tight_layout()
     fig.savefig("fig-bar.png", dpi=150)
 

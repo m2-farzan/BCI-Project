@@ -1,0 +1,122 @@
+% !TEX TS-program = XeLaTeX
+% Commands for running this:
+%     xelatex main
+% End of commands
+\documentclass[a4paper, 12pt]{report}
+\usepackage[top=30mm, bottom=35mm, left=25mm, right=25mm]{geometry}
+\usepackage{fancyhdr, graphicx}
+\usepackage[pagebackref=false,colorlinks,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{pdflscape}
+
+\usepackage{tikz}
+\usepackage{pgfmath}
+\usetikzlibrary{arrows.meta,arrows,angles,snakes}
+\usepackage{multirow}
+\usepackage{fancyvrb}
+\usepackage{listings}
+\lstset{
+basicstyle=\small\ttfamily,
+columns=flexible,
+breaklines=true
+}
+\usepackage[section]{placeins}
+
+
+%\usepackage[hidelinks]{hyperref}
+\usepackage[extrafootnotefeatures, localise]{xepersian}
+\settextfont[Scale=1]{XB Niloofar}
+\setlatintextfont[Scale=0.9]{XB Niloofar}
+%\setlatintextfont[Scale=0.9]{cm}
+\linespread{1.6}
+\newcommand{\مل}{\متن‌لاتین}
+\newcommand{\tlr}[1]{\text{\lr{#1}}}
+\newcommand{\ورب}[1]{\Verb!#1!}
+
+\usepackage{threeparttable}
+\newcommand{\جپانویس}{\tnote}
+
+\usepackage{comment}
+\usepackage{titling}
+\pagestyle{fancy}
+\fancyhead[L]{}
+\fancyhead[R]{\it{\thetitle}}
+\setlength{\headheight}{27pt}
+
+\newcommand{\آ}{\emph{%
+سخاوی}}
+\newcommand{\ب}{\emph{%
+کوآن}}
+\newcommand{\پ}{\emph{%
+جئونگ}}
+
+\عنوان{گزارش پروژه پایانی درس کنترل هوشمند}
+\نویسنده{محمد فرزان (99743297) \\ عرفان محمودتبار (99743279)}
+\تاریخ{\فضای‌و{\پر} نسخه ۱ | \امروز}
+\شروع{document}
+{\centering
+به نام خدا
+\vspace{2cm}
+
+\hspace{0.7cm}
+\includegraphics[height=2.5cm]{img/iust-nomech.pdf}
+
+دانشکده مهندسی مکانیک
+
+\vspace{0cm}
+
+{\let\newpage\relax\maketitle}}
+
+\صفحه‌جدید
+
+\chapter*{فهرست تغییرات}
+\input{changelog}
+
+\صفحه‌جدید
+\فهرست‌مطالب
+
+\فصل{مقدمه}
+\ورودی{intro}
+\فصل{تشریح مقالات مورد بررسی}
+\ورودی{overview}
+\فصل{پیاده‌سازی نرم‌افزاری}
+\ورودی{implementation}
+\فصل{تحلیل نتایج}
+\ورودی{results}
+\فصل{بحث و نتیجه‌گیری}
+\ورودی{summary}
+\پیوست
+
+\فصل{نقش اعضا}
+عرفان محمودتبار:
+\شروع{فقرات}
+\فقره پیاده‌سازی شبکه‌های عصبی
+\فقره متن گزارش - بخش شبکه‌های عصبی
+\فقره پیاده‌سازی فایل \مل{main}
+\پایان{فقرات}
+
+محمد فرزان:
+\شروع{فقرات}
+\فقره پیاده‌سازی پیش‌پردازش‌ها
+\فقره متن گزارش - قسمت‌های کلی
+\فقره تهیه فایل اجرایی پرتابل
+\پایان{فقرات}
+
+\chapter*{مراجع}
+\pagestyle{empty}
+{
+%\bibliographystyl{acm-fa}%{chicago-fa}%{plainnat-fa}%
+\begingroup
+\renewcommand{\chapter}[2]{}%
+\lr{
+%\bibliographystyle{ieeetr-fa}
+\bibliographystyle{vancouver}
+\bibliography{ref}
+}
+\endgroup
+}
+
+\پایان{document}

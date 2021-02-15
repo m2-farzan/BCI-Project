@@ -1,0 +1,67 @@
+% !TEX TS-program = XeLaTeX
+% Commands for running this:
+%     xelatex main
+% End of commands
+\documentclass[a4paper, 12pt]{article}
+\usepackage[top=30mm, bottom=35mm, left=25mm, right=25mm]{geometry}
+\usepackage{fancyhdr, graphicx}
+\usepackage[pagebackref=false,colorlinks,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{pdflscape}
+
+\usepackage{tikz}
+\usepackage{pgfmath}
+\usetikzlibrary{arrows.meta,arrows,angles,snakes}
+\usepackage{multirow}
+\usepackage{fancyvrb}
+\usepackage{listings}
+\lstset{
+basicstyle=\small\ttfamily,
+columns=flexible,
+breaklines=true
+}
+\usepackage[section]{placeins}
+
+
+%\usepackage[hidelinks]{hyperref}
+\usepackage[extrafootnotefeatures, localise]{xepersian}
+\settextfont[Scale=1]{XB Niloofar}
+\setlatintextfont[Scale=0.9]{XB Niloofar}
+%\setlatintextfont[Scale=0.9]{cm}
+\linespread{1.6}
+\newcommand{\مل}{\متن‌لاتین}
+\newcommand{\tlr}[1]{\text{\lr{#1}}}
+\newcommand{\ورب}[1]{\Verb!#1!}
+
+\usepackage{threeparttable}
+\newcommand{\جپانویس}{\tnote}
+
+\usepackage{comment}
+\usepackage{titling}
+\pagestyle{fancy}
+\fancyhead[L]{}
+\fancyhead[R]{\it{\thetitle}}
+\setlength{\headheight}{27pt}
+
+\newcommand{\آ}{\emph{%
+سخاوی}}
+\newcommand{\ب}{\emph{%
+کوآن}}
+\newcommand{\پ}{\emph{%
+جئونگ}}
+
+\عنوان{راهنمای کد}
+\نویسنده{}
+\تاریخ{نسخه ۱ | \امروز}
+\شروع{document}
+{\centering
+{\let\newpage\relax\maketitle}}
+
+\قسمت{فهرست تغییرات}
+\ورودی{changelog}
+\قسمت{راهنمای اجرای کد}
+\ورودی{code-readme}
+\پایان{document}

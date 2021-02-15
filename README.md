@@ -2,7 +2,7 @@
 
 Final project of intelligent control systems course, Dept. of Mechanical Engineering, IUST (Fall 2020).
 
-State: WIP
+State: Finished
 
 ## Intro
 
@@ -14,6 +14,16 @@ In this project, the BCI methods described in papers [1-3] will be reproduced an
 
 [3] [EEG Classification of Forearm Movement Imagery Using a Hierarchical Flow Convolutional Neural Network (2020)](https://ieeexplore.ieee.org/document/9046799)
 
-## Requirements
+## Quick Setup
 
-This project depends on [this fork of moabb](https://github.com/m2-farzan/moabb).
+If you're using Windows 10 64-bit, you can download the project alongside a portable version of python with pre-installed libraries.
+Follow [this link](https://mfarzan.ir/bci-project/portable).
+
+## Manual Setup
+
+This project depends on [this fork of moabb](https://github.com/m2-farzan/moabb), so make sure to install it first.
+
+Also install other requirements by running:
+```bash
+pip install -r requirements.txt
+```

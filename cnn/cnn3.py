@@ -21,22 +21,22 @@ class CNN3(BaseEstimator):
 
     def fit(self, X, Y,batch_size=100,epochs=50):
         X = X.reshape(-1, 20,300, 1)
-        X = X.astype('float32')
-        self.Y_dic = {
-                    "feet": 0,
-                    "left_hand": 1,
-                    "right_hand": 2,
-                    "tongue": 3
-                }
+        # X = X.astype('float32')
+        # self.Y_dic = {
+        #             "feet": 0,
+        #             "left_hand": 1,
+        #             "right_hand": 2,
+        #             "tongue": 3
+        #         }
         
-        classes = np.unique(Y)
-        numeric_Y = np.zeros(Y.shape,dtype=int)
-        for classe in classes:
-            a = (Y == classe)
-            numeric_Y[a] = int(self.Y_dic[classe])
+        # classes = np.unique(Y)
+        # numeric_Y = np.zeros(Y.shape,dtype=int)
+        # for classe in classes:
+        #     a = (Y == classe)
+        #     numeric_Y[a] = int(self.Y_dic[classe])
             
         # Change the labels from categorical to one-hot encoding
-        Y_one_hot = to_categorical(numeric_Y)
+        Y_one_hot = to_categorical(Y, num_classes=4)
         
         X_train, X_valid, Y_train, Y_valid = train_test_split(X, Y_one_hot, test_size=0.2)
         
@@ -45,38 +45,42 @@ class CNN3(BaseEstimator):
         # Architecture of the Model
         
         self.hfcnn_model = Sequential()
-        self.hfcnn_model.add(Conv2D(1, kernel_size=(1, 25),strides=(1, 1),
-                                   activation=('elu'),use_bias=True,input_shape=(20,300,1),padding='valid'))
-        #hfcnn_model.add(BatchNormalization())
-        #hfcnn_model.add(Activation('relu'))
-        #self.hfcnn_model.add(AveragePooling2D(pool_size=(1, 3),padding='same'))
-        self.hfcnn_model.add(Dropout(0.5))
+        # self.hfcnn_model.add(Conv2D(1, kernel_size=(1, 25),strides=(1, 1),
+        #                            activation=('elu'),use_bias=True,input_shape=(20,300,1),padding='valid'))
+        # #hfcnn_model.add(BatchNormalization())
+        # #hfcnn_model.add(Activation('relu'))
+        # #self.hfcnn_model.add(AveragePooling2D(pool_size=(1, 3),padding='same'))
+        # self.hfcnn_model.add(Dropout(0.5))
 
-        self.hfcnn_model.add(Conv2D(1, (20, 1), strides=(1, 1),activation=('elu'),use_bias=True,padding='valid'))
-        #hfcnn_model.add(BatchNormalization())
-        #hfcnn_model.add(Activation('relu'))
-        self.hfcnn_model.add(AveragePooling2D(pool_size=(1, 3),padding='valid'))
+        # self.hfcnn_model.add(Conv2D(1, (20, 1), strides=(1, 1),activation=('elu'),use_bias=True,padding='valid'))
+        # #hfcnn_model.add(BatchNormalization())
+        # #hfcnn_model.add(Activation('relu'))
+        # self.hfcnn_model.add(AveragePooling2D(pool_size=(1, 3),padding='valid'))
+        # self.hfcnn_model.add(Dropout(0.5))
+        
+        # self.hfcnn_model.add(Conv2D(1, kernel_size=(1, 6),strides=(1, 1),
+        #                            activation=('elu'),use_bias=True,padding='valid'))
+        # self.hfcnn_model.add(Dropout(0.5))
+        
+        self.hfcnn_model.add(Conv2D(18, kernel_size=(1, 4),strides=(1, 1),
+                                   activation=('relu'),use_bias=True,padding='same',input_shape=(20,300,1)))
+        self.hfcnn_model.add(AveragePooling2D(pool_size=(1, 3),padding='same'))
         self.hfcnn_model.add(Dropout(0.5))
         
-        self.hfcnn_model.add(Conv2D(1, kernel_size=(1, 6),strides=(1, 1),
-                                   activation=('elu'),use_bias=True,padding='valid'))
+        self.hfcnn_model.add(Conv2D(18, kernel_size=(1, 4),strides=(1, 1),
+                                   activation=('relu'),use_bias=True,padding='same'))
+        self.hfcnn_model.add(AveragePooling2D(pool_size=(1, 3),padding='same'))
         self.hfcnn_model.add(Dropout(0.5))
-        
-        self.hfcnn_model.add(Conv2D(1, kernel_size=(1, 4),strides=(1, 1),
-                                   activation=('elu'),use_bias=True,padding='valid'))
-        self.hfcnn_model.add(AveragePooling2D(pool_size=(1, 3),padding='valid'))
-        self.hfcnn_model.add(Dropout(0.5))
-        
-        self.hfcnn_model.add(Conv2D(1, kernel_size=(1, 4),strides=(1, 1),
-                                   activation=('elu'),use_bias=True,padding='valid'))
-        self.hfcnn_model.add(AveragePooling2D(pool_size=(1, 3),padding='valid'))
-        self.hfcnn_model.add(Dropout(0.5))
-        self.hfcnn_model.add(Conv2D(1, kernel_size=(1, 4),strides=(1, 1),
-                                   activation=('elu'),use_bias=True,padding='valid'))
-        self.hfcnn_model.add(AveragePooling2D(pool_size=(1, 3),padding='valid'))
+        self.hfcnn_model.add(Conv2D(18, kernel_size=(1, 4),strides=(1, 1),
+                                   activation=('relu'),use_bias=True,padding='same'))
+        self.hfcnn_model.add(AveragePooling2D(pool_size=(1, 3),padding='same'))
         #self.hfcnn_model.add(Dropout(0.5))
         
         self.hfcnn_model.add(Flatten())
+
+        self.hfcnn_model.add(Dense(256 ,activation=('relu'),use_bias=True)) 
+        
+        self.hfcnn_model.add(Dropout(0.5))
 
         
         self.hfcnn_model.add(Dense(4,activation=('softmax'),use_bias=True))
@@ -93,14 +97,16 @@ class CNN3(BaseEstimator):
     def predict(self, V):
         V = V.reshape(-1, 20,300, 1)
         predicted_classes = self.hfcnn_model.predict(V)
-        predicted_classes = np.argmax(np.round(predicted_classes),axis=1)
-        reversed_Y_dic = {value : key for (key, value) in self.Y_dic.items()}
-        p_classes = np.unique(predicted_classes)
-        string_predicted_classes = [None] * len(predicted_classes)
+        for u in predicted_classes[:]:
+            print(u)
+        predicted_classes = np.argmax(predicted_classes,axis=1)
+        # reversed_Y_dic = {value : key for (key, value) in self.Y_dic.items()}
+        # p_classes = np.unique(predicted_classes)
+        # string_predicted_classes = [None] * len(predicted_classes)
 
-        for item in p_classes:
-            a =  list(locate(predicted_classes, lambda x: x == item))
-            for aa in a :
-                string_predicted_classes[aa] = (reversed_Y_dic[item])
+        # for item in p_classes:
+        #     a =  list(locate(predicted_classes, lambda x: x == item))
+        #     for aa in a :
+        #         string_predicted_classes[aa] = (reversed_Y_dic[item])
         
-        return string_predicted_classes
+        return predicted_classes

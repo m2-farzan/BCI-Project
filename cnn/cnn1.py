@@ -21,24 +21,11 @@ class CNN1(BaseEstimator):
 
 
     def fit(self, X, Y,batch_size=64,epochs=50):
-        print(list(Y))
+        # print(list(Y))
         X = X.reshape(-1, 32,40, 1)
-        X = X.astype('float32')
-        self.Y_dic = {
-                    0: 0,
-                    1: 1,
-                    2: 2,
-                    3: 3
-                }
-        
-        classes = np.unique(Y)
-        numeric_Y = np.zeros(Y.shape,dtype=int)
-        for classe in classes:
-            a = (Y == classe)
-            numeric_Y[a] = int(self.Y_dic[classe])
             
         # Change the labels from categorical to one-hot encoding
-        Y_one_hot = to_categorical(numeric_Y)
+        Y_one_hot = to_categorical(Y)
         
         X_train, X_valid, Y_train, Y_valid = train_test_split(X, Y_one_hot, test_size=0.2)
         
@@ -79,15 +66,6 @@ class CNN1(BaseEstimator):
     def predict(self, V):
         V = V.reshape(-1, 32,40, 1)
         predicted_classes = self.cwcnn_model.predict(V)
-        predicted_classes = np.argmax(np.round(predicted_classes),axis=1)
-        reversed_Y_dic = {value : key for (key, value) in self.Y_dic.items()}
-        p_classes = np.unique(predicted_classes)
-        string_predicted_classes = [None] * len(predicted_classes)
-
-        for item in p_classes:
-            a =  list(locate(predicted_classes, lambda x: x == item))
-            for aa in a :
-                string_predicted_classes[aa] = (reversed_Y_dic[item])
-        
-        return string_predicted_classes
+        predicted_classes = np.argmax(predicted_classes, axis=1)
+        return predicted_classes
 

@@ -21,20 +21,20 @@ class CNN2(BaseEstimator):
 
     def fit(self, X, Y,batch_size=50,epochs=10):
         X = X.reshape((-1, 20, 28, 28,1))
-        X = X.astype('float32')
-        self.Y_dic = {
-              0: 0,
-              1: 1,
-            }
+     #    X = X.astype('float32')
+     #    self.Y_dic = {
+     #          0: 0,
+     #          1: 1,
+     #        }
 
-        numeric_label = np.zeros(Y.shape,dtype=int)
-        classes = np.unique(Y)
-        for classe in classes:
-            a = (labels == classe)
-            numeric_label[a] = int(self.Y_dic[classe])
+     #    numeric_label = np.zeros(Y.shape,dtype=int)
+     #    classes = np.unique(Y)
+     #    for classe in classes:
+     #        a = (labels == classe)
+          #   numeric_label[a] = int(self.Y_dic[classe])
             
         # Change the labels from categorical to one-hot encoding
-        labels_one_hot = to_categorical(numeric_label)
+        labels_one_hot = to_categorical(Y)
         
         X_train, X_valid, Y_train, Y_valid = train_test_split(X, labels_one_hot, test_size=0.2)
         
@@ -264,7 +264,7 @@ class CNN2(BaseEstimator):
 
         FC = Dense(1024,activation=('relu'),use_bias=True)(merge_Model)
 
-        SOFTMAX = Dense(2,activation=('softmax'),use_bias=True)(FC)
+        SOFTMAX = Dense(4,activation=('softmax'),use_bias=True)(FC)
 
         self.model = Model(inputs=[inputA, inputB ,inputC, inputD,inputE,
                               inputF,inputG, inputH,inputI, inputJ,inputK,
@@ -363,16 +363,16 @@ class CNN2(BaseEstimator):
                                 input11 ,input12 ,input13 ,input14 , input15 ,input16 ,input17 , input18 ,input19 ,
                                 input20])
         predicted_classes = np.argmax(predicted_classes,axis=1)
-        reversed_Y_dic = {value : key for (key, value) in self.Y_dic.items()}
-        p_classes = np.unique(predicted_classes)
-        string_predicted_classes = [None] * len(predicted_classes)
+     #    reversed_Y_dic = {value : key for (key, value) in self.Y_dic.items()}
+     #    p_classes = np.unique(predicted_classes)
+     #    string_predicted_classes = [None] * len(predicted_classes)
 
-        for item in p_classes:
-            a =  list(locate(predicted_classes, lambda x: x == item))
-            for aa in a :
-                string_predicted_classes[aa] = (reversed_Y_dic[item])
+     #    for item in p_classes:
+     #        a =  list(locate(predicted_classes, lambda x: x == item))
+     #        for aa in a :
+     #            string_predicted_classes[aa] = (reversed_Y_dic[item])
         
-        return string_predicted_classes
+        return predicted_classes
 
 
 
